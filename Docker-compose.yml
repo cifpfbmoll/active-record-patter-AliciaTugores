@@ -1,47 +1,47 @@
-version: '3'
-services:
-
-  api:
-    build:
-      context: .
-      dockerfile: ./src/main/docker/Dockerfile.jvm
-    image: fruits:dev
-    container_name: fruits
-    restart: always
-    depends_on:
-      - db
-    ports:
-      - 8080:8080
-    networks:
-      - backend
-
-  db:
-    image: mysql:latest
-    container_name: db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: tester
-      MYSQL_DATABASE: fruit
-      MYSQL_USER: tester
-      MYSQL_PASSWORD: tester
-    ports:
-      - 3306:3306
-    volumes: 
-      - db:/var/lib/mysql
-    networks:
-      backend:
-        aliases:
-          - db
-
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8888:8888     
-          
-networks:
-  backend:
-    driver: bridge
-
-volumes: 
-  db:
+#version: '3'
+#services:
+#
+#  api:
+#    build:
+#      context: .
+#      dockerfile: ./src/main/docker/Dockerfile.jvm
+#    image: fruits:dev
+#    container_name: fruits
+#    restart: always
+#    depends_on:
+#      - db
+#    ports:
+#      - 8080:8080
+#    networks:
+#      - backend
+#
+#  db:
+#    image: mariadb:latest
+#    container_name: db
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: tester
+#      MYSQL_DATABASE: fruit
+#      MYSQL_USER: tester
+#      MYSQL_PASSWORD: tester
+#    ports:
+#      - 3306:3306
+#    volumes:
+#      - db:/var/lib/mysql
+#    networks:
+#      backend:
+#        aliases:
+#          - db
+#
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 8888:8888
+#
+#networks:
+#  backend:
+#    driver: bridge
+#
+#volumes:
+#  db:

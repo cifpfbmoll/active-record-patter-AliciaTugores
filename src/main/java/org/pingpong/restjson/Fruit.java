@@ -5,14 +5,17 @@ import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@Entity
+@Table(name="Fruit")
 @JsonPropertyOrder({"name", "decription"})
-public class Fruit {
+public class Fruit extends PanacheEntity {
 
-    // los propiedades han de ser publicas para que jackson
-    // pueda acceder a ellar por reflection
     @NotBlank
-    private String name;
+    @Column(unique = true)
+    public String name;
+
     @NotEmpty
+    @Column
     public String description;
 
     public Fruit() {
@@ -37,5 +40,4 @@ public class Fruit {
     public String nombre() {
         return "UMAMI";
     }*/
-
 }

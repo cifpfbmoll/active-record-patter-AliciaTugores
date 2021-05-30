@@ -9,26 +9,31 @@ import javax.inject.Inject;
 @ApplicationScoped
 public class ServiceFruit {
 
-    @Inject
-    RepoFruit repo;
+//    @Inject
+//    RepoFruit repo;
 
     public ServiceFruit() { 
         // CDI
     }
 
     public Set<Fruit> list() {
-        return repo.list();
+        // stream requiere una transaction
+        Stream<Fruit> fruits = Fruit.streamAll();
+        return fruits.collect(Collectors.toSet());
     }
 
     public void add(Fruit fruit) {
-        repo.add(fruit);
+        fruit.persist();
     }
 
     public void remove(String name) {
-        repo.remove(name);
+        Fruit fruit = Fruit.find("name", name).firstResult();
+        fruit.delete();
     }
 
     public Optional<Fruit> getFruit(String name) {
-        return name.isBlank()? Optional.ofNullable(null) : repo.get(name);
+        return name.isBlank()?
+                Optional.ofNullable(null) :
+                Fruit.find("name", name).firstResultOptional();
     }
 }
